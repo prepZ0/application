@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  piston:
+    image: ghcr.io/engineer-man/piston
+    container_name: piston
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "2000:2000"
+    volumes:
+      - piston_packages:/piston/packages
+    environment:
+      # Output limits
+      - PISTON_LIMIT_OUTPUT=65536
+      # Time limits (in ms)
+      - PISTON_LIMIT_TIMEOUT=10000
+      - PISTON_LIMIT_COMPILE_TIMEOUT=30000
+      # Memory limits (in bytes, 512MB)
+      - PISTON_LIMIT_MEMORY=536870912
+      # Process limits
+      - PISTON_LIMIT_PROCESSES=256
+      # File limits
+      - PISTON_LIMIT_FILES=2048
+      # Disable network for security
+      - PISTON_DISABLE_NETWORKING=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2000/api/v2/runtimes"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  piston_packages:
+    driver: local

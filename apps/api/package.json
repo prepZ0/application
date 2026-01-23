@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "start": "bun run dist/index.js",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@placementhub/auth": "workspace:*",
+    "@placementhub/database": "workspace:*",
+    "@placementhub/piston-client": "workspace:*",
+    "@placementhub/shared-types": "workspace:*",
+    "@placementhub/utils": "workspace:*",
+    "better-auth": "^1.2.0",
+    "hono": "^4.6.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

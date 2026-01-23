@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "framework": null,
+  "buildCommand": "cd ../.. && bun install && bun run build:api",
+  "installCommand": "cd ../.. && bun install",
+  "functions": {
+    "api/index.ts": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.ts"
+    }
+  ]
+}

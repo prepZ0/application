@@ -1,0 +1,104 @@
+/**
+ * Application constants
+ */
+
+// Test configuration limits
+export const TEST_LIMITS = {
+  MIN_DURATION: 5, // minutes
+  MAX_DURATION: 240, // minutes
+  MIN_PASSING_SCORE: 0,
+  MAX_PASSING_SCORE: 100,
+  MIN_TAB_SWITCH_LIMIT: 0,
+  MAX_TAB_SWITCH_LIMIT: 10,
+  MAX_QUESTIONS_PER_TEST: 100,
+} as const;
+
+// Question configuration limits
+export const QUESTION_LIMITS = {
+  MIN_MARKS: 1,
+  MAX_MARKS: 100,
+  MAX_OPTIONS_PER_MCQ: 6,
+  MIN_OPTIONS_PER_MCQ: 2,
+  MAX_TEST_CASES: 20,
+  MIN_TEST_CASES: 1,
+  MAX_TIME_LIMIT: 30, // seconds
+  MAX_MEMORY_LIMIT: 512, // MB
+} as const;
+
+// Code execution limits
+export const EXECUTION_LIMITS = {
+  DEFAULT_TIMEOUT: 5000, // ms
+  MAX_TIMEOUT: 30000, // ms
+  DEFAULT_MEMORY: 256, // MB
+  MAX_MEMORY: 512, // MB
+  MAX_OUTPUT_SIZE: 65536, // bytes
+  MAX_CODE_SIZE: 100000, // bytes
+} as const;
+
+// Pagination defaults
+export const PAGINATION = {
+  DEFAULT_PAGE: 1,
+  DEFAULT_PAGE_SIZE: 20,
+  MAX_PAGE_SIZE: 100,
+} as const;
+
+// Session configuration
+export const SESSION = {
+  EXPIRY_DAYS: 7,
+  TEST_LOCK_WARNING_MINUTES: 5,
+} as const;
+
+// File upload limits
+export const UPLOAD_LIMITS = {
+  MAX_RESUME_SIZE: 5 * 1024 * 1024, // 5 MB
+  MAX_LOGO_SIZE: 2 * 1024 * 1024, // 2 MB
+  ALLOWED_RESUME_TYPES: ["application/pdf"],
+  ALLOWED_IMAGE_TYPES: ["image/jpeg", "image/png", "image/webp"],
+} as const;
+
+// HTTP status codes
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+  INTERNAL_SERVER_ERROR: 500,
+} as const;
+
+// Error codes
+export const ERROR_CODES = {
+  // Auth errors
+  INVALID_CREDENTIALS: "INVALID_CREDENTIALS",
+  EMAIL_NOT_VERIFIED: "EMAIL_NOT_VERIFIED",
+  SESSION_EXPIRED: "SESSION_EXPIRED",
+  UNAUTHORIZED: "UNAUTHORIZED",
+  FORBIDDEN: "FORBIDDEN",
+
+  // Resource errors
+  NOT_FOUND: "NOT_FOUND",
+  ALREADY_EXISTS: "ALREADY_EXISTS",
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+
+  // Test errors
+  TEST_NOT_STARTED: "TEST_NOT_STARTED",
+  TEST_ALREADY_SUBMITTED: "TEST_ALREADY_SUBMITTED",
+  TEST_TIME_EXPIRED: "TEST_TIME_EXPIRED",
+  TEST_LOCKED_ANOTHER_DEVICE: "TEST_LOCKED_ANOTHER_DEVICE",
+
+  // Execution errors
+  EXECUTION_TIMEOUT: "EXECUTION_TIMEOUT",
+  EXECUTION_ERROR: "EXECUTION_ERROR",
+  UNSUPPORTED_LANGUAGE: "UNSUPPORTED_LANGUAGE",
+
+  // Rate limiting
+  RATE_LIMITED: "RATE_LIMITED",
+
+  // Server errors
+  INTERNAL_ERROR: "INTERNAL_ERROR",
+} as const;
