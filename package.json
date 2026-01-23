@@ -1,0 +1,33 @@
+{
+  "name": "placementhub",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=web",
+    "dev:api": "turbo dev --filter=api",
+    "build": "turbo build",
+    "build:web": "turbo build --filter=web",
+    "build:api": "turbo build --filter=api",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "db:generate": "bun --filter database db:generate",
+    "db:push": "bun --filter database db:push",
+    "db:migrate": "bun --filter database db:migrate",
+    "db:studio": "bun --filter database db:studio",
+    "db:seed": "bun --filter database db:seed",
+    "piston:start": "docker-compose -f infrastructure/docker/docker-compose.piston.yml up -d",
+    "piston:stop": "docker-compose -f infrastructure/docker/docker-compose.piston.yml down",
+    "clean": "turbo clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0",
+    "prettier": "^3.4.0",
+    "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
