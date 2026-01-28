@@ -41,8 +41,8 @@ app.get("/health", (c) => {
   return c.json({ status: "ok" });
 });
 
-// Better Auth handler - handles all /auth/* routes
-app.on(["GET", "POST"], "/auth/*", (c) => {
+// Better Auth handler - handles all /api/auth/* routes
+app.on(["GET", "POST"], "/api/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
 

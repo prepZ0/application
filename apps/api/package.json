@@ -15,6 +15,7 @@
     "@placementhub/piston-client": "workspace:*",
     "@placementhub/shared-types": "workspace:*",
     "@placementhub/utils": "workspace:*",
+    "@prisma/client": "^6.2.0",
     "better-auth": "^1.2.0",
     "hono": "^4.6.0",
     "zod": "^3.24.0"

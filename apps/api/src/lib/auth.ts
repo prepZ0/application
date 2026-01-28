@@ -18,7 +18,13 @@ export const auth = betterAuth({
   }),
 
   // Base URL for the API
-  baseURL: process.env.BETTER_AUTH_URL || process.env.API_URL,
+  basePath: "/api/auth",
+  baseURL: process.env.BETTER_AUTH_URL || process.env.API_URL || "http://localhost:3001",
+
+  // Trusted origins for CORS
+  trustedOrigins: [
+    process.env.FRONTEND_URL || "http://localhost:3000",
+  ],
 
   // Secret for signing tokens
   secret: process.env.BETTER_AUTH_SECRET,
