@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { Building2, Users, FileText, Activity } from "lucide-react";
-import { Header, StatCard } from "@/components/dashboard";
+import { StatCard } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardContent, Badge, Button } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -16,10 +16,7 @@ export default function SuperAdminDashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Header title="Platform Administration" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
@@ -100,7 +97,6 @@ export default function SuperAdminDashboard() {
             )}
           </CardContent>
         </Card>
-      </main>
     </div>
   );
 }

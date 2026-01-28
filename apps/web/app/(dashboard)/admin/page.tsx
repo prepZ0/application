@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { FileText, Code2, Briefcase, Users } from "lucide-react";
-import { Header, StatCard } from "@/components/dashboard";
+import { StatCard } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardContent, Button, Badge } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -23,10 +23,7 @@ export default function AdminDashboard() {
   const recentDrives = drives?.slice(0, 5) || [];
 
   return (
-    <div className="min-h-screen">
-      <Header title="Admin Dashboard" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
@@ -137,7 +134,6 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         </div>
-      </main>
     </div>
   );
 }

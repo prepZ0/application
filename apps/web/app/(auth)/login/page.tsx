@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/auth-client";
+import { signIn, org } from "@/lib/auth-client";
 import { Button, Input, Label, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Alert, AlertDescription } from "@/components/ui";
 
 export default function LoginPage() {
@@ -27,6 +27,17 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message || "Invalid email or password");
         return;
+      }
+
+      // Try to auto-set active organization after login
+      try {
+        const orgsRes = await org.listOrganizations();
+        const orgs = orgsRes?.data;
+        if (orgs && orgs.length > 0) {
+          await org.setActive({ organizationId: orgs[0].id });
+        }
+      } catch {
+        // No org or error - dashboard router will handle it
       }
 
       router.push("/dashboard");

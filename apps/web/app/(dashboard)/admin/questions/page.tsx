@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Header } from "@/components/dashboard";
 import { Card, CardContent, Button, Badge, Input, Select, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Spinner, Alert, AlertDescription, Modal, ModalHeader, ModalTitle, ModalDescription, ModalFooter } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -55,10 +54,7 @@ export default function AdminQuestionsPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header title="Questions Bank" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 justify-between">
           <div className="flex gap-4 flex-1">
             <div className="relative flex-1 max-w-md">
@@ -171,7 +167,6 @@ export default function AdminQuestionsPage() {
             </Button>
           </ModalFooter>
         </Modal>
-      </main>
     </div>
   );
 }

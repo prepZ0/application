@@ -10,6 +10,7 @@ import { questionRoutes } from "./routes/question.routes";
 import { driveRoutes } from "./routes/drive.routes";
 import { executionRoutes } from "./routes/execution.routes";
 import { submissionRoutes } from "./routes/submission.routes";
+import { userRoutes } from "./routes/user.routes";
 
 // Create Hono app
 const app = new Hono();
@@ -53,6 +54,7 @@ app.route("/api/questions", questionRoutes);
 app.route("/api/drives", driveRoutes);
 app.route("/api/execute", executionRoutes);
 app.route("/api/submissions", submissionRoutes);
+app.route("/api/me", userRoutes);
 
 // 404 handler
 app.notFound((c) => {

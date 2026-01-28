@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Header } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardContent, Button, Badge, Input, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Spinner, Alert, AlertDescription, Modal, ModalHeader, ModalTitle, ModalDescription, ModalFooter } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -44,10 +43,7 @@ export default function AdminTestsPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header title="Tests Management" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 justify-between">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -158,7 +154,6 @@ export default function AdminTestsPage() {
             </Button>
           </ModalFooter>
         </Modal>
-      </main>
     </div>
   );
 }

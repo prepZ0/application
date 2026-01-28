@@ -26,6 +26,18 @@ export const {
   organization,
 } = authClient;
 
+// The organization plugin methods are accessed via proxy and not fully typed.
+// Cast to a typed interface for use throughout the app.
+interface OrganizationClient {
+  create: (data: { name: string; slug: string }) => Promise<any>;
+  setActive: (data: { organizationId: string | null } | { organizationSlug: string | null }) => Promise<any>;
+  getFullOrganization: () => Promise<any>;
+  listOrganizations: () => Promise<{ data: Array<{ id: string; name: string; slug: string }> }>;
+  useActiveOrganization: () => { data: { id: string; name: string; slug: string; logo?: string } | null; isPending: boolean };
+}
+
+export const org = organization as unknown as OrganizationClient;
+
 // Types
 export type Session = typeof authClient.$Infer.Session;
 export type User = Session["user"];

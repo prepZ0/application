@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Header } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardContent, Badge, Button, Spinner, Alert, AlertDescription, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -25,10 +24,7 @@ export default function StudentTestsPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header title="My Tests" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         {error && (
           <Alert variant="destructive">
             <AlertDescription>{error}</AlertDescription>
@@ -95,7 +91,6 @@ export default function StudentTestsPage() {
             )}
           </CardContent>
         </Card>
-      </main>
     </div>
   );
 }

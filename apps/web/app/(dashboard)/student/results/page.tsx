@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardContent, Badge, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui";
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react";
 
@@ -31,10 +30,7 @@ export default function StudentResultsPage() {
   const passedTests = mockResults.filter(r => r.status === "passed").length;
 
   return (
-    <div className="min-h-screen">
-      <Header title="My Results" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         {/* Summary Cards */}
         <div className="grid gap-4 md:grid-cols-3">
           <Card>
@@ -108,7 +104,6 @@ export default function StudentResultsPage() {
             </Table>
           </CardContent>
         </Card>
-      </main>
     </div>
   );
 }

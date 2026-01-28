@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Header } from "@/components/dashboard";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Button, Input, Select, Spinner, Alert, AlertDescription } from "@/components/ui";
 import { useApi } from "@/hooks/use-api";
 import { api } from "@/lib/api-client";
@@ -34,10 +33,7 @@ export default function StudentDrivesPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header title="Placement Drives" />
-
-      <main className="p-6 space-y-6">
+    <div className="space-y-6">
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
@@ -114,7 +110,6 @@ export default function StudentDrivesPage() {
             ))}
           </div>
         )}
-      </main>
     </div>
   );
 }
