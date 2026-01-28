@@ -127,6 +127,11 @@ class ApiClient {
     update: (id: string, data: any) => this.put<any>(`/api/colleges/${id}`, data),
     members: (id: string) => this.get<any[]>(`/api/colleges/${id}/members`),
   };
+
+  user = {
+    me: () => this.get<any>("/api/me"),
+    update: (data: any) => this.put<any>("/api/me", data),
+  };
 }
 
 export const api = new ApiClient(API_URL);

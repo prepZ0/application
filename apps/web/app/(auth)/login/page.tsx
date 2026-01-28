@@ -29,7 +29,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/student");
+      router.push("/dashboard");
     } catch (err) {
       setError("An unexpected error occurred");
     } finally {

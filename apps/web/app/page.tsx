@@ -1,6 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function HomePage() {
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (isPending) return;
+
+    if (session?.user) {
+      router.replace("/dashboard");
+      return;
+    }
+
+    setChecked(true);
+  }, [session, isPending, router]);
+
+  if (!checked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
