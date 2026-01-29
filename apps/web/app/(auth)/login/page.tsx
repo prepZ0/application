@@ -31,7 +31,7 @@ export default function LoginPage() {
 
       // Try to auto-set active organization after login
       try {
-        const orgsRes = await org.listOrganizations();
+        const orgsRes = await org.list();
         const orgs = orgsRes?.data;
         if (orgs && orgs.length > 0) {
           await org.setActive({ organizationId: orgs[0].id });

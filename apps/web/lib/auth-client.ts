@@ -26,17 +26,24 @@ export const {
   organization,
 } = authClient;
 
-// The organization plugin methods are accessed via proxy and not fully typed.
-// Cast to a typed interface for use throughout the app.
+// Organization methods accessed via better-auth's proxy.
+// Direct calls use short paths (e.g., organization.list -> /organization/list).
+// Hooks are exposed at top-level with "use" prefix (e.g., authClient.useActiveOrganization).
 interface OrganizationClient {
   create: (data: { name: string; slug: string }) => Promise<any>;
   setActive: (data: { organizationId: string | null } | { organizationSlug: string | null }) => Promise<any>;
   getFullOrganization: () => Promise<any>;
-  listOrganizations: () => Promise<{ data: Array<{ id: string; name: string; slug: string }> }>;
-  useActiveOrganization: () => { data: { id: string; name: string; slug: string; logo?: string } | null; isPending: boolean };
+  getActiveMember: () => Promise<any>;
+  list: () => Promise<{ data: Array<{ id: string; name: string; slug: string }> }>;
 }
 
 export const org = organization as unknown as OrganizationClient;
+
+// React hooks from the organization plugin (exposed at top-level with "use" prefix)
+export const useActiveOrganization = (authClient as any).useActiveOrganization as () => {
+  data: { id: string; name: string; slug: string; logo?: string } | null;
+  isPending: boolean;
+};
 
 // Types
 export type Session = typeof authClient.$Infer.Session;

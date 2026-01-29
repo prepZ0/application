@@ -51,6 +51,9 @@ model Session {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Better Auth organization plugin: tracks active organization per session
+  activeOrganizationId String?
+
   // Custom: Test session lock
   activeTestAttemptId String?  @unique
   isTestLocked        Boolean  @default(false)
