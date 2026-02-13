@@ -31,6 +31,7 @@ export function NavUser() {
   const userInitial = userName.charAt(0).toUpperCase();
 
   const handleSignOut = async () => {
+    try { localStorage.removeItem("placementhub_org"); } catch {};
     await signOut();
     window.location.href = "/login";
   };
