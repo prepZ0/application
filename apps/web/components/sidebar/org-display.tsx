@@ -1,59 +1,77 @@
-"use client";
+"use client"
 
-import { Building2 } from "lucide-react";
-import { useActiveOrganization } from "@/lib/auth-client";
-import { useAuth } from "@/components/providers/auth-provider";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react"
+import { Building2 } from "lucide-react"
+import { useActiveOrganization } from "@/lib/auth-client"
+import { useAuth } from "@/components/providers/auth-provider"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
 
-const roleLabels: Record<string, string> = {
-  owner: "Owner",
-  admin: "Admin",
-  member: "Student",
-  recruiter: "Recruiter",
-  super_admin: "Super Admin",
-};
-
-const roleVariants: Record<string, "default" | "secondary" | "outline"> = {
-  owner: "default",
-  admin: "default",
-  member: "secondary",
-  recruiter: "secondary",
-  super_admin: "default",
-};
+const LS_KEY = "placementhub_org"
 
 export function OrgDisplay() {
-  const { session } = useAuth();
-  const { data: activeOrg } = useActiveOrganization();
+  const { session, isLoading } = useAuth()
+  const { data: activeOrg } = useActiveOrganization()
 
-  const collegeName = activeOrg?.name || session?.user?.activeCollegeName || "No Organization";
-  const collegeRole = session?.user?.collegeRole;
-  const hasOrg = !!activeOrg || !!session?.user?.activeCollegeId;
+  // Local state seeded from localStorage so the name renders instantly
+  // on page refresh — no waiting for the Better Auth API round-trip.
+  const [cached, setCached] = useState<{ name: string } | null>(null)
+
+  // On mount (client only): read whatever we stored last time
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(LS_KEY)
+      if (raw) setCached(JSON.parse(raw))
+    } catch {
+      /* empty */
+    }
+  }, [])
+
+  // Whenever fresh data arrives from the org hook, persist it
+  useEffect(() => {
+    const name = activeOrg?.name
+    if (name) {
+      const entry = { name }
+      setCached(entry)
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(entry))
+      } catch {
+        /* empty */
+      }
+    }
+  }, [activeOrg?.name])
+
+  const collegeName =
+    cached?.name ||
+    activeOrg?.name ||
+    session?.user?.activeCollegeName ||
+    "No Organization"
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <SidebarMenuButton size="lg" className="cursor-default hover:bg-transparent">
+        <SidebarMenuButton
+          size="lg"
+          className="cursor-default hover:bg-transparent"
+        >
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Building2 className="size-4" />
           </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">{collegeName}</span>
-            {hasOrg && collegeRole && (
-              <Badge
-                variant={roleVariants[collegeRole] || "outline"}
-                className="mt-1 w-fit text-[10px] px-1.5 py-0"
-              >
-                {roleLabels[collegeRole] || collegeRole}
-              </Badge>
-            )}
-          </div>
+          {isLoading ? (
+            <div className="grid flex-1 gap-1.5">
+              <Skeleton className="h-4 w-28" />
+            </div>
+          ) : (
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-semibold">{collegeName}</span>
+            </div>
+          )}
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }

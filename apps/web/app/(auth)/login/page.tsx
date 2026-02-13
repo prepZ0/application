@@ -35,6 +35,7 @@ export default function LoginPage() {
         const orgs = orgsRes?.data;
         if (orgs && orgs.length > 0) {
           await org.setActive({ organizationId: orgs[0].id });
+          try { localStorage.setItem("placementhub_org", JSON.stringify({ name: orgs[0].name })); } catch {};
         }
       } catch {
         // No org or error - dashboard router will handle it
