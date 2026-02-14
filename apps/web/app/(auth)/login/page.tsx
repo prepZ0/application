@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, org } from "@/lib/auth-client";
+import { api } from "@/lib/api-client";
 import { Button, Input, Label, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Alert, AlertDescription } from "@/components/ui";
 
 export default function LoginPage() {
@@ -34,7 +35,9 @@ export default function LoginPage() {
         const orgsRes = await org.list();
         const orgs = orgsRes?.data;
         if (orgs && orgs.length > 0) {
-          await org.setActive({ organizationId: orgs[0].id });
+          // Activate org: sets activeOrganizationId and persists role/name/slug on session
+          await api.user.activateOrg(orgs[0].id);
+          try { localStorage.setItem("placementhub_org", JSON.stringify({ name: orgs[0].name })); } catch {}
         }
       } catch {
         // No org or error - dashboard router will handle it

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useSession, type ExtendedSession } from "@/lib/auth-client";
 import { Spinner } from "@/components/ui";
 
@@ -26,14 +26,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isPending]);
 
+  const value = useMemo(
+    () => ({
+      session: session as ExtendedSession | null,
+      isLoading,
+      isAuthenticated: !!session?.user,
+    }),
+    [session, isLoading]
+  );
+
   return (
-    <AuthContext.Provider
-      value={{
-        session: session as ExtendedSession | null,
-        isLoading,
-        isAuthenticated: !!session?.user,
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
@@ -73,7 +76,7 @@ export function ProtectedRoute({ children, allowedRoles, fallback }: ProtectedRo
   }
 
   if (allowedRoles && allowedRoles.length > 0) {
-    const userRole = session?.user?.collegeRole;
+    const userRole = (session as any)?.session?.activeOrganizationRole;
     if (!userRole || !allowedRoles.includes(userRole)) {
       return (
         <div className="min-h-screen flex items-center justify-center">

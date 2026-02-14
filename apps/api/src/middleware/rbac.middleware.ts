@@ -27,7 +27,7 @@ export function requirePermission(resource: Resource, action: Action) {
       );
     }
 
-    const userRole = (session.user as any).collegeRole;
+    const userRole = (session.session as any).activeOrganizationRole;
 
     if (!userRole) {
       return c.json(
@@ -80,7 +80,7 @@ export function requireRole(...allowedRoles: string[]) {
       );
     }
 
-    const userRole = (session.user as any).collegeRole;
+    const userRole = (session.session as any).activeOrganizationRole;
 
     if (!userRole || !allowedRoles.includes(userRole)) {
       return c.json(
@@ -120,7 +120,7 @@ export async function requireCollegeMembership(c: Context, next: Next) {
     );
   }
 
-  const collegeId = (session.user as any).activeCollegeId;
+  const collegeId = (session.session as any).activeOrganizationId;
 
   if (!collegeId) {
     return c.json(
@@ -154,7 +154,7 @@ export function getCollegeId(c: Context): string | undefined {
 export function requireSameCollege(requestCollegeId: string) {
   return async (c: Context, next: Next) => {
     const session = getSession(c);
-    const userCollegeId = (session?.user as any)?.activeCollegeId;
+    const userCollegeId = (session?.session as any)?.activeOrganizationId;
 
     if (userCollegeId !== requestCollegeId) {
       return c.json(

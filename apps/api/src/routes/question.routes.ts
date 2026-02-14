@@ -113,7 +113,7 @@ questionRoutes.get(
     const { id } = c.req.param();
     const collegeId = getCollegeId(c);
     const session = getSession(c);
-    const userRole = (session?.user as any)?.collegeRole;
+    const userRole = (session?.session as any)?.activeOrganizationRole;
 
     const question = await prisma.question.findFirst({
       where: { id, collegeId },

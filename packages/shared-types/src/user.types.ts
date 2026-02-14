@@ -15,9 +15,18 @@ export interface User {
 }
 
 export interface SessionUser extends User {
+  // Org context is now on the session object, not the user.
+  // These fields are kept for backward compatibility but deprecated.
   activeCollegeId?: string;
   activeCollegeName?: string;
   collegeRole?: UserRole;
+}
+
+export interface SessionOrgContext {
+  activeOrganizationId?: string;
+  activeOrganizationRole?: string;
+  activeOrganizationName?: string;
+  activeOrganizationSlug?: string;
 }
 
 export interface CreateUserInput {

@@ -24,11 +24,11 @@ const updateCollegeSchema = createCollegeSchema.partial();
  */
 collegeRoutes.get("/", authMiddleware, async (c) => {
   const session = getSession(c);
-  const userRole = (session?.user as any)?.collegeRole;
+  const userRole = (session?.session as any)?.activeOrganizationRole;
 
   // For non-super-admins, only show their college
   if (userRole !== "super_admin") {
-    const collegeId = (session?.user as any)?.activeCollegeId;
+    const collegeId = (session?.session as any)?.activeOrganizationId;
     if (!collegeId) {
       return c.json({ success: true, data: [] });
     }

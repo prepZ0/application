@@ -30,9 +30,9 @@ export function OrgDisplay() {
   const { session } = useAuth();
   const { data: activeOrg } = useActiveOrganization();
 
-  const collegeName = activeOrg?.name || session?.user?.activeCollegeName || "No Organization";
-  const collegeRole = session?.user?.collegeRole;
-  const hasOrg = !!activeOrg || !!session?.user?.activeCollegeId;
+  const collegeName = activeOrg?.name || (session as any)?.session?.activeOrganizationName || "No Organization";
+  const collegeRole = (session as any)?.session?.activeOrganizationRole;
+  const hasOrg = !!activeOrg || !!(session as any)?.session?.activeOrganizationId;
 
   return (
     <SidebarMenu>

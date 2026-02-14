@@ -49,14 +49,15 @@ export const useActiveOrganization = (authClient as any).useActiveOrganization a
 export type Session = typeof authClient.$Infer.Session;
 export type User = Session["user"];
 
-// Extended session type with college info
-export interface ExtendedUser extends User {
-  activeCollegeId?: string;
-  activeCollegeName?: string;
-  activeCollegeSlug?: string;
-  collegeRole?: string;
+// Extended session type with org context on session (not user)
+export interface ExtendedSessionData {
+  activeOrganizationId?: string;
+  activeOrganizationRole?: string;
+  activeOrganizationName?: string;
+  activeOrganizationSlug?: string;
 }
 
-export interface ExtendedSession extends Session {
-  user: ExtendedUser;
+export interface ExtendedSession {
+  user: User;
+  session: Session["session"] & ExtendedSessionData;
 }

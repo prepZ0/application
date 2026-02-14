@@ -13,7 +13,7 @@ export default function ProfileLayout({
   const { session } = useAuth();
 
   // Determine role based on session
-  const collegeRole = session?.user?.collegeRole;
+  const collegeRole = (session as any)?.session?.activeOrganizationRole;
   let role: "student" | "admin" | "recruiter" | "super-admin" = "student";
 
   if (collegeRole === "owner" || collegeRole === "admin") {
