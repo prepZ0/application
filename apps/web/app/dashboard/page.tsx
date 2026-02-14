@@ -60,6 +60,9 @@ export default function DashboardRouter() {
           return;
         }
 
+        // 1. Set active org in Better Auth (updates client-side state + useActiveOrganization hook)
+        await org.setActive({ organizationId: orgs[0].id });
+        // 2. Persist role/name/slug on the session row for RBAC
         const activateRes = await api.user.activateOrg(orgs[0].id);
         const memberRole = activateRes?.data?.activeOrganizationRole;
 

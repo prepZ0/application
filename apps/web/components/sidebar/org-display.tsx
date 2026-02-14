@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Building2 } from "lucide-react";
 import { useActiveOrganization } from "@/lib/auth-client";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -26,11 +27,24 @@ const roleVariants: Record<string, "default" | "secondary" | "outline"> = {
   super_admin: "default",
 };
 
+function getCachedOrgName(): string | null {
+  try {
+    const raw = localStorage.getItem("placementhub_org");
+    if (raw) return JSON.parse(raw).name || null;
+  } catch {}
+  return null;
+}
+
 export function OrgDisplay() {
   const { session } = useAuth();
   const { data: activeOrg } = useActiveOrganization();
+  const [cachedName, setCachedName] = useState<string | null>(null);
 
-  const collegeName = activeOrg?.name || (session as any)?.session?.activeOrganizationName || "No Organization";
+  useEffect(() => {
+    setCachedName(getCachedOrgName());
+  }, []);
+
+  const collegeName = activeOrg?.name || (session as any)?.session?.activeOrganizationName || cachedName || "No Organization";
   const collegeRole = (session as any)?.session?.activeOrganizationRole;
   const hasOrg = !!activeOrg || !!(session as any)?.session?.activeOrganizationId;
 

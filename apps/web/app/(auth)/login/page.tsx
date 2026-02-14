@@ -35,7 +35,9 @@ export default function LoginPage() {
         const orgsRes = await org.list();
         const orgs = orgsRes?.data;
         if (orgs && orgs.length > 0) {
-          // Activate org: sets activeOrganizationId and persists role/name/slug on session
+          // 1. Set active org in Better Auth (updates client-side state + useActiveOrganization hook)
+          await org.setActive({ organizationId: orgs[0].id });
+          // 2. Persist role/name/slug on the session row for RBAC
           await api.user.activateOrg(orgs[0].id);
           try { localStorage.setItem("placementhub_org", JSON.stringify({ name: orgs[0].name })); } catch {}
         }
