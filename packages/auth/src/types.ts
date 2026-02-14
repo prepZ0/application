@@ -23,14 +23,14 @@ export interface AuthSession {
   userAgent?: string;
   isTestLocked?: boolean;
   activeTestAttemptId?: string;
+  activeOrganizationId?: string;
+  activeOrganizationRole?: string;
+  activeOrganizationName?: string;
+  activeOrganizationSlug?: string;
 }
 
 export interface ExtendedSession {
-  user: AuthUser & {
-    activeCollegeId?: string;
-    activeCollegeName?: string;
-    collegeRole?: UserRole;
-  };
+  user: AuthUser;
   session: AuthSession;
 }
 

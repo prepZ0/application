@@ -1,3 +1,5 @@
+import type { McqOption } from "./question.types";
+
 export type TestStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 
 export interface Test {
@@ -63,8 +65,3 @@ export interface TestQuestionWithDetails {
   };
 }
 
-export interface McqOption {
-  id: string;
-  text: string;
-  isCorrect?: boolean; // Only visible to admins
-}

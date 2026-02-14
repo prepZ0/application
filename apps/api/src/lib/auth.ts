@@ -48,6 +48,20 @@ export const auth = betterAuth({
       enabled: true,
       maxAge: AUTH_CONFIG.session.cookieCacheMaxAge,
     },
+    additionalFields: {
+      activeOrganizationRole: {
+        type: "string",
+        required: false,
+      },
+      activeOrganizationName: {
+        type: "string",
+        required: false,
+      },
+      activeOrganizationSlug: {
+        type: "string",
+        required: false,
+      },
+    },
   },
 
   // User fields configuration
@@ -104,42 +118,6 @@ export const auth = betterAuth({
       },
     }),
   ],
-
-  // Callbacks for custom logic
-  callbacks: {
-    // Add college context to session
-    session: async ({ session, user }) => {
-      try {
-        // Fetch user's organization membership
-        const membership = await prisma.member.findFirst({
-          where: { userId: user.id },
-          include: {
-            organization: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-              },
-            },
-          },
-        });
-
-        return {
-          ...session,
-          user: {
-            ...session.user,
-            activeCollegeId: membership?.organizationId ?? null,
-            activeCollegeName: membership?.organization.name ?? null,
-            activeCollegeSlug: membership?.organization.slug ?? null,
-            collegeRole: membership?.role ?? null,
-          },
-        };
-      } catch (error) {
-        console.error("[Auth] Error fetching membership:", error);
-        return session;
-      }
-    },
-  },
 
   // Advanced configuration
   advanced: {

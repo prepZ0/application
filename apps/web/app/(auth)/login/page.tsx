@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, org } from "@/lib/auth-client";
+import { api } from "@/lib/api-client";
 import { Button, Input, Label, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Alert, AlertDescription } from "@/components/ui";
 
 export default function LoginPage() {
@@ -34,7 +35,11 @@ export default function LoginPage() {
         const orgsRes = await org.list();
         const orgs = orgsRes?.data;
         if (orgs && orgs.length > 0) {
+          // 1. Set active org in Better Auth (updates client-side state + useActiveOrganization hook)
           await org.setActive({ organizationId: orgs[0].id });
+          // 2. Persist role/name/slug on the session row for RBAC
+          await api.user.activateOrg(orgs[0].id);
+          try { localStorage.setItem("placementhub_org", JSON.stringify({ name: orgs[0].name })); } catch {}
         }
       } catch {
         // No org or error - dashboard router will handle it
